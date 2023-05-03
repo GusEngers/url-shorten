@@ -8,7 +8,7 @@ const Url = require('../models/url');
 async function getUrl(id) {
   if (!id) throw new Error('Error: Missing Parameter!');
   let response = await Url.findOne({ id });
-  if (!response) throw new Error("Error: Requested URL doesn't exist");
+  if (!response) throw new Error("Error: Requested URL doesn't exist!");
   return response.url;
 }
 
