@@ -8,12 +8,14 @@ const isValidUrl = require('./validate');
  */
 async function generateIdentifier(url) {
   if (!url) throw new Error('Error: Missing Parameter!');
-  let _url = url.split("://")
-  if (!(await isValidUrl(_url[1])))
+  if (!url.includes('://')) {
+    url = 'https://' + url;
+  }
+  if (!(await isValidUrl(url)))
     throw new Error('Error: The URL already has a shortener!');
 
   let id = new Date().getTime().toString(36);
-  let newUrl = new Url({ id, url: _url[1] });
+  let newUrl = new Url({ id, url });
   await newUrl.save();
   return newUrl.id;
 }
