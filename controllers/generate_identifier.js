@@ -9,7 +9,7 @@ const isValidUrl = require('./validate');
 async function generateIdentifier(url) {
   if (!url) throw new Error('Error: Missing Parameter!');
   if (!url.includes('://')) {
-    url = 'https://' + url;
+    url = `https://${url}`;
   }
   if (!(await isValidUrl(url)))
     throw new Error('Error: The URL already has a shortener!');

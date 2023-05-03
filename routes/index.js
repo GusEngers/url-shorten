@@ -1,10 +1,13 @@
 const { Router } = require('express');
 const generateIdentifier = require('../controllers/generate_identifier');
+const getUrl = require('../controllers/get_url');
 const router = Router();
 
 router.get('/:id', async (req, res) => {
+  const { id } = req.params;
   try {
-    res.redirect('http://gus-engers.vercel.app/');
+    let data = await getUrl(id);
+    res.redirect(data);
   } catch (error) {
     res.status(500).send(error.message);
   }
