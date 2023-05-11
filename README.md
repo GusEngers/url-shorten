@@ -1,7 +1,5 @@
 # URL-SHORTEN
 
-## V1.0
-Primera versión del acortador de urls con solamente dos funcionalidades **crear** y **redireccionar**.
 
 ### REQUERIMIENTOS
 Si deseas descargar para experimentar este proyecto debes añadir en la raíz un archivo **.env** con las siguientes propiedades:
@@ -9,6 +7,27 @@ Si deseas descargar para experimentar este proyecto debes añadir en la raíz un
 PORT // Número de puerto
 MONGO_URI // Uri de la base de datos en MongoDB
 ```
+
+## V1.0.1
+- Ruta para obtener todas las urls guardadas:
+
+**GET -** ``/``
+
+``200``
+```Typescript
+[
+  {
+    "id": string // Identificador de la url
+    "url": string // Url original
+  },
+  ...
+]
+```
+
+---
+
+## V1.0.0
+Primera versión del acortador de urls con solamente dos funcionalidades **crear** y **redireccionar**.
 
 ### ENDPOINTS
 **POST -** ``/generate``

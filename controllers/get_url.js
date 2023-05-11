@@ -12,4 +12,12 @@ async function getUrl(id) {
   return response.url;
 }
 
-module.exports = getUrl;
+async function getUrls() {
+  let response = await Url.find().select('-_id -__v');
+  return response;
+}
+
+module.exports = {
+  getUrl,
+  getUrls,
+};
