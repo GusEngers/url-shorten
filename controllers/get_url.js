@@ -12,8 +12,15 @@ async function getUrl(id) {
   return response.original;
 }
 
-async function getUrls() {
-  let response = await Url.find().select('-_id -__v');
+/**
+ * Obtiene una lista de urls según el host donde se encuentra
+ * @param { string } host Host del servicio para filtrar las urls
+ * @returns Lista de objetos con información de las urls según su host
+ */
+async function getUrls(host) {
+  let response = await Url.find({ shorten: new RegExp(host, 'g') }).select(
+    '-_id -__v'
+  );
   return response;
 }
 

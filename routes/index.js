@@ -5,7 +5,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    let data = await getUrls();
+    let data = await getUrls(req.get('host'));
     res.json(data);
   } catch (error) {
     res.status(500).send(error.message);
