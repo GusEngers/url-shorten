@@ -23,11 +23,11 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/generate', async (req, res) => {
-  const { url } = req.body;
+  const { original } = req.body;
   try {
-    let data = await generateIdentifier(url);
     let path = req.protocol + '://' + req.get('host') + '/';
-    res.status(201).json({ data: path + data });
+    let url = await generateIdentifier(path, original);
+    res.status(201).json({ url });
   } catch (error) {
     res.status(500).send(error.message);
   }
