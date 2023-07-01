@@ -1,14 +1,12 @@
-const express = require('express');
-const { connect } = require('mongoose');
-const morgan = require('morgan');
-const router = require('./routes');
-require('dotenv').config();
+const app = require('express')();
+const { db } = require('./src/db');
+const users = require('./src/routes/users');
 
-const { PORT, MONGO_URI } = process.env;
-const app = express();
+require('dotenv').config();
+app.use(require('express').json());
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header(
     'Access-Control-Allow-Headers',
@@ -21,17 +19,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(morgan('dev'));
-app.use(express.json());
-app.use('/', router);
+app.use(require('morgan')('dev'));
+app.use('/users', users);
 
-connect(MONGO_URI)
-  .then(() => {
-    console.info('Database connected!');
-    app.listen(PORT, () => {
-      console.info('Server listening on port:', PORT);
-    });
-  })
-  .catch((error) => {
-    console.error('Failed database connection. Error:\n', error);
-  });
+app.listen(process.env.PORT, () => {
+  db.connect()
+    .then(() => {
+      console.log('Database connected!');
+      console.log('Server start on port:', process.env.PORT);
+    })
+    .catch((err) => console.error('Failed connect database:', err));
+});
