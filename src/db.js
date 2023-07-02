@@ -16,7 +16,7 @@ const pool = new Pool({
 pool.query(
   `CREATE TABLE IF NOT EXISTS users(
     user_id SERIAL PRIMARY KEY,
-    username VARCHAR(20)
+    username VARCHAR(20) UNIQUE
   );`
 );
 
