@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "start:prod": "node index.js"
+    "start:prod": "node index.js",
+    "test": "set DB_NAME=url_shorten_test&& mocha tests/**/*.test.js",
+    "test:db": "set DB_NAME=url_shorten_test&& mocha tests/db/*.test.js",
+    "test:mid": "set DB_NAME=url_shorten_test&& mocha tests/middlewares/*.test.js",
+    "test:rt": "set DB_NAME=url_shorten_test&& mocha tests/routes/*.test.js"
   },
   "author": "Engers Gustavo",
   "license": "ISC",
@@ -16,6 +20,9 @@
     "pg": "^8.11.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.22",
+    "supertest": "^6.3.3"
   }
 }
