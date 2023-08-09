@@ -1,24 +1,19 @@
-const app = require('express')();
-const users = require('./routes/users');
+const express = require('express');
+const helmet = require('helmet');
+const handleError = require('./utils/handleError');
+const handleNotFound = require('./utils/handleNotFound');
+const handleCors = require('./utils/handleCors');
+const router = require('./api/routes');
 
-require('dotenv').config();
-app.use(require('express').json());
+const app = express();
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  res.header(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, DELETE, PATCH'
-  );
-  next();
-});
+app.use(express.json());
+app.use(helmet());
+app.use(handleCors);
 
-app.use(require('morgan')('dev'));
-app.use('/users', users);
+app.use('/', router);
+
+app.use(handleError);
+app.use(handleNotFound);
 
 module.exports = app;
