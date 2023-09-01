@@ -1,15 +1,16 @@
 const app = require('./src/app');
-const { db } = require('./src/db');
+const db = require('./src/db');
 require('dotenv').config();
 
-db.connect()
-  .then(() => {
+async function main() {
+  try {
+    await db();
     app.listen(process.env.PORT, () => {
-      console.log(
-        `Server listen on port: ${process.env.PORT} and database connected!`
-      );
+      console.log('Server listening on port:', process.env.PORT);
     });
-  })
-  .catch((err) => {
-    console.error('Database not connected:', err);
-  });
+  } catch (error) {
+    console.error('Error starting server:', error);
+  }
+}
+
+main();
