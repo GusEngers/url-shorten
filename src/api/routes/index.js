@@ -1,9 +1,14 @@
 const router = require('express').Router();
+const path = require('path');
 const create = require('../controllers/create');
 const getUrl = require('../controllers/get');
 const verifyBody = require('../middlewares/verifyBody');
 const verifyId = require('../middlewares/verifyId');
 
+router.get('/', (req, res) => {
+  let data = path.join(__dirname, '..', '..', 'public', 'index.html');
+  res.sendFile(data);
+});
 router.post('/create', verifyBody, async (req, res) => {
   try {
     const data = await create(req.body.link);
