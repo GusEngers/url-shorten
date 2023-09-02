@@ -8,14 +8,12 @@ const router = require('./api/routes');
 const app = express();
 
 app.use(express.json());
-app.use(express.static('public'));
-// app.use(helmet());
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 app.use(handleCors);
+// app.use(helmet());
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
-// app.use('/api', router);
+app.use('/', router);
 
 app.use(handleError);
 app.use(handleNotFound);
