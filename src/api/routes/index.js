@@ -9,7 +9,23 @@ router.get('/', (req, res) => {
   res.render('index');
 });
 
+/* -- Register Page and Controller -- */
+router
+  .route('/register')
+  .get((req, res) => {
+    res.render('register', { error: null });
+  })
+  .post(async (req, res) => {
+    try {
+      res.redirect('/dashboard');
+    } catch (error) {
+      res.render('register', { error: error.message });
+    }
+  });
 
+router.get('/dashboard', (req, res) => {
+  res.render('dashboard');
+});
 // router.post('/create', verifyBody, async (req, res) => {
 //   try {
 //     const data = await create(req.body.link);
