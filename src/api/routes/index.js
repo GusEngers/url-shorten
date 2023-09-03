@@ -25,6 +25,22 @@ router
     }
   });
 
+  /* -- Login Page and Controller */
+  router
+  .route('/login')
+  .get((req, res) => {
+    res.render('login', { error: null });
+  })
+  .post(async (req, res) => {
+    try {
+      setTimeout(() => {
+        res.redirect('/dashboard');
+      }, 10000);
+    } catch (error) {
+      res.render('login', { error: error.message });
+    }
+  });
+
 router.get('/dashboard', (req, res) => {
   res.render('dashboard');
 });
