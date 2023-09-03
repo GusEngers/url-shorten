@@ -17,7 +17,9 @@ router
   })
   .post(async (req, res) => {
     try {
-      res.redirect('/dashboard');
+      setTimeout(() => {
+        res.redirect('/dashboard');
+      }, 10000);
     } catch (error) {
       res.render('register', { error: error.message });
     }
