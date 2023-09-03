@@ -1,0 +1,50 @@
+body {
+  display: flex;
+  background-color: #ebbf6e;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container {
+  text-align: center;
+}
+
+.btn-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn-list div {
+  width: 50%;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.info {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid green;
+  border-radius: 5px;
+  color: green;
+  cursor: default;
+}
