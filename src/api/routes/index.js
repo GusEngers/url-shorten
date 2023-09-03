@@ -25,8 +25,8 @@ router
     }
   });
 
-  /* -- Login Page and Controller */
-  router
+/* -- Login Page and Controller -- */
+router
   .route('/login')
   .get((req, res) => {
     res.render('login', { error: null });
@@ -41,8 +41,23 @@ router
     }
   });
 
-router.get('/dashboard', (req, res) => {
-  res.render('dashboard');
+/* -- Dashboard Page and Controller -- */
+router.get('/dashboard', async (req, res) => {
+  const publics = ['hola.com', 'chau.com', 'hola.ar'];
+
+  let pro = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(['saludoformal.com']);
+    }, 5000);
+  });
+
+  const privates = await pro.then((value) => value);
+  res.render('dashboard', {
+    error: null,
+    username: 'Fulano',
+    publics,
+    privates,
+  });
 });
 // router.post('/create', verifyBody, async (req, res) => {
 //   try {

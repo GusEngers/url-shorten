@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL-SHORTEN - Dashboard</title>
-</head>
-<body>
-  <h1>Soy El Dashboard</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-SHORTEN - Dashboard</title>
+    <link rel="stylesheet" href="public/css/style.css" />
+  </head>
+  <body>
+    <a href="/" class="btn">Volver al Inicio</a>
+    <% if(error) { %>
+      <h1><%= error %></h1>
+    <% } else { %>
+      <h1>Bienvenido <%= username %></h1>
+      
+      <section>
+        <h3>Acortadores Privados</h3>
+        <% if(!privates) { %>
+          <p>No hay registros</p>
+        <% } else { %>
+          <% for(let url of privates) { %>
+            <p><%= url %></p>
+          <% } %>
+        <% } %>
+      </section>
+
+      <section>
+        <h3>Acortadores Púbicos</h3>
+        <% for(let url of publics) { %>
+          <p><%= url %></p>
+        <% } %>
+      </section>
+    <% } %>
+  </body>
 </html>
