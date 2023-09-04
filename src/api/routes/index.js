@@ -1,8 +1,6 @@
 const router = require('express').Router();
-const create = require('../controllers/create');
-const getUrl = require('../controllers/get');
-const verifyBody = require('../middlewares/verifyBody');
-const verifyId = require('../middlewares/verifyId');
+const createUser = require('../controllers/create_user');
+const User = require('../models/user');
 
 /* -- Landing Page -- */
 router.get('/', (req, res) => {
@@ -17,9 +15,9 @@ router
   })
   .post(async (req, res) => {
     try {
-      setTimeout(() => {
-        res.redirect('/dashboard');
-      }, 10000);
+      const { username, password } = req.body;
+      await createUser(username, password);
+      res.redirect('/dashboard');
     } catch (error) {
       res.render('register', { error: error.message });
     }
@@ -43,22 +41,12 @@ router
 
 /* -- Dashboard Page and Controller -- */
 router.get('/dashboard', async (req, res) => {
-  console.log(token)
-  const publics = ['hola.com', 'chau.com', 'hola.ar'];
-
-  let pro = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(['saludoformal.com']);
-    }, 5000);
-  });
-
-  const privates = await pro.then((value) => value);
-  res.render('dashboard', {
-    error: null,
-    username: 'Fulano',
-    publics,
-    privates,
-  });
+  try {
+    const users = await User.find({});
+    res.render('dashboard', { error: null, users });
+  } catch (error) {
+    res.render('dashboard', { error: error.message });
+  }
 });
 // router.post('/create', verifyBody, async (req, res) => {
 //   try {
@@ -78,5 +66,9 @@ router.get('/dashboard', async (req, res) => {
 //     res.status(404).json({ error: error.message });
 //   }
 // });
+router.get("/borrar", async (req, res) => {
+  await User.deleteMany({})
+  res.send('<h1>Base de datos limpia</h1>')
+})
 
 module.exports = router;

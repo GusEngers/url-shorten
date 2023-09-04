@@ -8,28 +8,14 @@
   </head>
   <body>
     <a href="/" class="btn">Volver al Inicio</a>
+
     <% if(error) { %>
       <h1><%= error %></h1>
     <% } else { %>
-      <h1>Bienvenido <%= username %></h1>
-      
-      <section>
-        <h3>Acortadores Privados</h3>
-        <% if(!privates) { %>
-          <p>No hay registros</p>
-        <% } else { %>
-          <% for(let url of privates) { %>
-            <p><%= url %></p>
-          <% } %>
-        <% } %>
-      </section>
-
-      <section>
-        <h3>Acortadores Púbicos</h3>
-        <% for(let url of publics) { %>
-          <p><%= url %></p>
-        <% } %>
-      </section>
+      <% for(let user of users) { %>
+        <p><%= user.username %></p>
+        <p><%= user.password %></p>
+      <% } %>
     <% } %>
   </body>
 </html>
