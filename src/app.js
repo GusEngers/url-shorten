@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const helmet = require('helmet');
 const handleError = require('./utils/handleError');
 const handleNotFound = require('./utils/handleNotFound');
 const handleCors = require('./utils/handleCors');
