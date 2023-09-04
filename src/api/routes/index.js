@@ -43,6 +43,7 @@ router
 
 /* -- Dashboard Page and Controller -- */
 router.get('/dashboard', async (req, res) => {
+  console.log(token)
   const publics = ['hola.com', 'chau.com', 'hola.ar'];
 
   let pro = new Promise((resolve, reject) => {
