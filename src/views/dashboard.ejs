@@ -35,14 +35,14 @@
           />
           <span id="code-error" class="error-msg"></span>
         </div>
-        <button type="submit" id="btn-private" class="btn-create" disabled>
+        <button type="submit" id="btn-private" class="btn-create">
           Acortar
         </button>
       </form>
 
       <% if(!user.privates.length) { %>
 
-      <p>Todavía no posees acortadores privados</p>
+      <p class="info">Todavía no posees acortadores privados</p>
 
       <% } else { %>
 
@@ -51,6 +51,7 @@
           <tr>
             <th>Original</th>
             <th>Acortado</th>
+            <th>Código Acceso</th>
             <th>Visitas</th>
           </tr>
         </thead>
@@ -84,14 +85,14 @@
           <input type="url" id="url_public" name="original_url" required />
           <span id="url-public-error" class="error-msg"></span>
         </div>
-        <button type="submit" id="btn-public" class="btn-create" >
+        <button type="submit" id="btn-public" class="btn-create">
           Acortar
         </button>
       </form>
 
       <% if(!publics.length) { %>
 
-      <p>Todavía no posees acortadores públicos</p>
+      <p class="info">Todavía no posees acortadores públicos</p>
 
       <% } else { %>
 

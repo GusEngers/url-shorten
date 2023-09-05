@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const createUrl = require('../controllers/create_url');
 const createUser = require('../controllers/create_user');
 const loginUser = require('../controllers/login_user');
 const authUser = require('../middlewares/auth_user');
@@ -49,7 +50,7 @@ router
 /* -- Dashboard Page and Controller -- */
 router.get('/dashboard', authUser, async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).populate('privates');
 
     res.render('dashboard', {
       error: null,
@@ -69,11 +70,17 @@ router.get('/dashboard', authUser, async (req, res) => {
 
 router.post('/add', async (req, res) => {
   try {
-    console.log(req.query);
-    console.log(req.body);
-    res.redirect('/');
+    let path = req.protocol + '://' + req.get('host') + '/r/';
+    await createUrl({
+      token: req.cookies.token,
+      type: req.query.type,
+      path,
+      data: req.body,
+    });
+    res.redirect('/dashboard');
   } catch (error) {
     console.error(error);
+    res.redirect('/');
   }
 });
 
