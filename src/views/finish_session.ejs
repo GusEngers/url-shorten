@@ -3,17 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>URL-SHORTEN - Dashboard</title>
+    <title>URL-SHORTEN</title>
     <link rel="stylesheet" href="public/css/style.css" />
   </head>
   <body>
+    <h1>¡Ups! Sentimos la molestia</h1>
+    <p><%= error %></p>
+
+    <hr class="solid" />
+    <p>Para seguir navegando, puede elegir una de las opciones</p>
+    <a href="/login" class="btn">Iniciar Sesión</a>
     <a href="/" class="btn">Volver al Inicio</a>
-    <% if(error) { %>
-    <h1><%= error %></h1>
-    <% } else { %>
-    <p><%= user._id %></p>
-    <p><%= user.username %></p>
-    <p><%= user.password %></p>
-    <% } %>
   </body>
 </html>

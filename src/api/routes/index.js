@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const createUser = require('../controllers/create_user');
 const loginUser = require('../controllers/login_user');
+const authUser = require('../middlewares/auth_user');
 const existToken = require('../middlewares/exist_token');
 const verifyBody = require('../middlewares/verify_body');
 const verifyUserExist = require('../middlewares/verify_user_exist');
@@ -46,11 +47,11 @@ router
   });
 
 /* -- Dashboard Page and Controller -- */
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard', authUser, async (req, res) => {
   try {
-    const token = req.cookies.token;
-    const users = await User.find({});
-    res.render('dashboard', { error: null, users, token });
+    const user = await User.findById(req.user._id);
+
+    res.render('dashboard', { error: null, user });
   } catch (error) {
     res.render('dashboard', { error: error.message });
   }
