@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const createUser = require('../controllers/create_user');
+const loginUser = require('../controllers/login_user');
+const existToken = require('../middlewares/exist_token');
 const verifyBody = require('../middlewares/verify_body');
 const verifyUserExist = require('../middlewares/verify_user_exist');
 const User = require('../models/user');
@@ -18,7 +20,8 @@ router
   .post(verifyBody, verifyUserExist, async (req, res) => {
     try {
       const { username, password } = req.body;
-      await createUser(username, password);
+      const token = await createUser(username, password);
+      res.cookie('token', token);
       res.redirect('/dashboard');
     } catch (error) {
       res.render('register', { error: error.message });
@@ -28,14 +31,15 @@ router
 /* -- Login Page and Controller -- */
 router
   .route('/login')
-  .get((req, res) => {
+  .get(existToken, (req, res) => {
     res.render('login', { error: null });
   })
-  .post(async (req, res) => {
+  .post(verifyBody, async (req, res) => {
     try {
-      setTimeout(() => {
-        res.redirect('/dashboard');
-      }, 10000);
+      const { username, password } = req.body;
+      const token = await loginUser(username, password);
+      res.cookie('token', token);
+      res.redirect('/dashboard');
     } catch (error) {
       res.render('login', { error: error.message });
     }
@@ -44,8 +48,9 @@ router
 /* -- Dashboard Page and Controller -- */
 router.get('/dashboard', async (req, res) => {
   try {
+    const token = req.cookies.token;
     const users = await User.find({});
-    res.render('dashboard', { error: null, users });
+    res.render('dashboard', { error: null, users, token });
   } catch (error) {
     res.render('dashboard', { error: error.message });
   }
