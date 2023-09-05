@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const createUser = require('../controllers/create_user');
+const verifyBody = require('../middlewares/verify_body');
+const verifyUserExist = require('../middlewares/verify_user_exist');
 const User = require('../models/user');
 
 /* -- Landing Page -- */
@@ -13,7 +15,7 @@ router
   .get((req, res) => {
     res.render('register', { error: null });
   })
-  .post(async (req, res) => {
+  .post(verifyBody, verifyUserExist, async (req, res) => {
     try {
       const { username, password } = req.body;
       await createUser(username, password);
@@ -66,9 +68,9 @@ router.get('/dashboard', async (req, res) => {
 //     res.status(404).json({ error: error.message });
 //   }
 // });
-router.get("/borrar", async (req, res) => {
-  await User.deleteMany({})
-  res.send('<h1>Base de datos limpia</h1>')
-})
+router.get('/borrar', async (req, res) => {
+  await User.deleteMany({});
+  res.send('<h1>Base de datos limpia</h1>');
+});
 
 module.exports = router;
