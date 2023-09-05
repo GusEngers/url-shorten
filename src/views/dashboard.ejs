@@ -5,15 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL-SHORTEN - Dashboard</title>
     <link rel="stylesheet" href="public/css/style.css" />
+    <link rel="stylesheet" href="public/css/dashboard-style.css" />
   </head>
   <body>
-    <a href="/" class="btn">Volver al Inicio</a>
     <% if(error) { %>
+
     <h1><%= error %></h1>
+
     <% } else { %>
-    <p><%= user._id %></p>
-    <p><%= user.username %></p>
-    <p><%= user.password %></p>
+
+    <a href="/" class="btn">Cerrar Sesión</a>
+    <h1>¡Bienvenido <em><%= user.username %></em>!</h1>
+
+    <section>
+      <h3>Acortadores Privados</h3>
+      <form action="/add?type=private" method="post">
+        <div class="form-input">
+          <label for="url_private">Nueva URL-SHORTEN</label>
+          <input type="url" id="url_private" name="original_url" required />
+          <span id="url-private-error" class="error-msg"></span>
+        </div>
+        <div class="form-input">
+          <label for="code_private">Clave de Acceso</label>
+          <input
+            type="password"
+            id="code_private"
+            name="access_code"
+            required
+          />
+          <span id="code-error" class="error-msg"></span>
+        </div>
+        <button type="submit" id="btn-private" class="btn-create" disabled>
+          Acortar
+        </button>
+      </form>
+
+      <% if(!user.privates.length) { %>
+
+      <p>Todavía no posees acortadores privados</p>
+
+      <% } else { %>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original</th>
+            <th>Acortado</th>
+            <th>Visitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let url of user.privates) { %>
+          <tr>
+            <td><%= url.original_url%></td>
+            <td>
+              <a
+                href="<%= url.shorten_url%>"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <%= url.shorten_url %>
+              </a>
+            </td>
+            <td><%= url.access_code%></td>
+            <td><%= url.views%></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <% } %>
+    </section>
+
+    <section>
+      <h3>Acortadores Públicos</h3>
+      <form action="/add?type=public" method="post" id="public-form">
+        <div class="form-input">
+          <label for="url_public">Nueva URL-SHORTEN</label>
+          <input type="url" id="url_public" name="original_url" required />
+          <span id="url-public-error" class="error-msg"></span>
+        </div>
+        <button type="submit" id="btn-public" class="btn-create" >
+          Acortar
+        </button>
+      </form>
+
+      <% if(!publics.length) { %>
+
+      <p>Todavía no posees acortadores públicos</p>
+
+      <% } else { %>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original</th>
+            <th>Acortado</th>
+            <th>Visitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let url of publics) { %>
+          <tr>
+            <td><%= url.original_url%></td>
+            <td>
+              <a
+                href="<%= url.shorten_url %>"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <%= url.shorten_url %>
+              </a>
+            </td>
+            <td><%= url.views%></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <% } %>
+    </section>
+
     <% } %>
+
+    <!-- Scripts -->
+    <script src="public/js/dashboard-script.js"></script>
   </body>
 </html>

@@ -51,11 +51,32 @@ router.get('/dashboard', authUser, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
-    res.render('dashboard', { error: null, user });
+    res.render('dashboard', {
+      error: null,
+      user,
+      publics: [
+        {
+          original_url: 'https://google.com',
+          shorten_url: 'https://sh.com/asd',
+          views: 3,
+        },
+      ],
+    });
   } catch (error) {
     res.render('dashboard', { error: error.message });
   }
 });
+
+router.post('/add', async (req, res) => {
+  try {
+    console.log(req.query);
+    console.log(req.body);
+    res.redirect('/');
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 // router.post('/create', verifyBody, async (req, res) => {
 //   try {
 //     const data = await create(req.body.link);

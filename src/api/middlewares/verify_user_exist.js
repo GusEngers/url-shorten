@@ -4,11 +4,9 @@ async function verifyUserExist(req, res, next) {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (user) {
-      return res
-        .status(400)
-        .render('register', {
-          error: `El nombre de usuario ${user.username} ya existe`,
-        });
+      return res.status(400).render('register', {
+        error: `El nombre de usuario "${user.username}" ya existe`,
+      });
     }
     next();
   } catch (error) {
