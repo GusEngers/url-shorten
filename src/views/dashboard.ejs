@@ -8,38 +8,41 @@
     <link rel="stylesheet" href="public/css/dashboard-style.css" />
   </head>
   <body>
-    <% if(error) { %>
-
-    <h1><%= error %></h1>
-
-    <% } else { %>
-
     <a href="/" class="btn">Cerrar Sesión</a>
     <h1>¡Bienvenido <em><%= user.username %></em>!</h1>
 
     <section>
       <h3>Acortadores Privados</h3>
-      <form action="/add?type=private" method="post">
+
+      <% if(user.privates.length >= 5) { %>
+
+      <p class="info error">Alcanzaste el límite de 5 acortadores privados</p>
+
+      <% } else { %>
+
+      <form action="/add?type=private" method="post" id="private-form">
         <div class="form-input">
-          <label for="url_private">Nueva URL-SHORTEN</label>
-          <input type="url" id="url_private" name="original_url" required />
+          <label for="url-private">Nueva URL-SHORTEN</label>
+          <input type="url" id="url-private" name="original_url" required />
           <span id="url-private-error" class="error-msg"></span>
         </div>
         <div class="form-input">
-          <label for="code_private">Clave de Acceso</label>
+          <label for="code-private">Clave de Acceso</label>
           <input
             type="password"
-            id="code_private"
+            id="code-private"
             name="access_code"
             required
           />
-          <span id="code-error" class="error-msg"></span>
+          <span id="code-private-error" class="error-msg"></span>
         </div>
-        <button type="submit" id="btn-private" class="btn-create">
+        <button type="submit" id="btn-private" class="btn-create" disabled>
           Acortar
         </button>
       </form>
 
+      <% } %>
+      
       <% if(!user.privates.length) { %>
 
       <p class="info">Todavía no posees acortadores privados</p>
@@ -51,7 +54,7 @@
           <tr>
             <th>Original</th>
             <th>Acortado</th>
-            <th>Código Acceso</th>
+            <th>Clave Acceso</th>
             <th>Visitas</th>
           </tr>
         </thead>
@@ -70,6 +73,7 @@
             </td>
             <td><%= url.access_code%></td>
             <td><%= url.views%></td>
+            <td><button id="<%= url._id %>" onclick="deleteUrl(this)">X</button></td>
           </tr>
           <% } %>
         </tbody>
@@ -79,16 +83,25 @@
 
     <section>
       <h3>Acortadores Públicos</h3>
+
+      <% if(publics.length >= 10) { %>
+
+      <p class="info error">Alcanzaste el límite de 10 acortadores públicos</p>
+  
+      <% } else { %>
+
       <form action="/add?type=public" method="post" id="public-form">
         <div class="form-input">
-          <label for="url_public">Nueva URL-SHORTEN</label>
-          <input type="url" id="url_public" name="original_url" required />
+          <label for="url-public">Nueva URL-SHORTEN</label>
+          <input type="url" id="url-public" name="original_url" required />
           <span id="url-public-error" class="error-msg"></span>
         </div>
         <button type="submit" id="btn-public" class="btn-create">
           Acortar
         </button>
       </form>
+
+      <% } %>
 
       <% if(!publics.length) { %>
 
@@ -125,8 +138,6 @@
 
       <% } %>
     </section>
-
-    <% } %>
 
     <!-- Scripts -->
     <script src="public/js/dashboard-script.js"></script>

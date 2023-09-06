@@ -24,7 +24,6 @@ h3 {
 form {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
@@ -45,6 +44,8 @@ label {
   color: red;
   font-size: 10px;
   height: 10px;
+  width: 175px;
+  text-align: center;
 }
 
 .btn-create {
@@ -101,4 +102,16 @@ td {
   border-radius: 5px;
   color: green;
   cursor: default;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
+}
+
+.loading {
+  font-size: 15px;
+  color: green;
+  margin: 10px;
+  padding: 10px 20px;
 }

@@ -53,7 +53,6 @@ router.get('/dashboard', authUser, async (req, res) => {
     const user = await User.findById(req.user._id).populate('privates');
 
     res.render('dashboard', {
-      error: null,
       user,
       publics: [
         {
@@ -64,7 +63,7 @@ router.get('/dashboard', authUser, async (req, res) => {
       ],
     });
   } catch (error) {
-    res.render('dashboard', { error: error.message });
+    res.render('finish-session', { error: error.message });
   }
 });
 
