@@ -1,19 +1,9 @@
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Url = require('../models/url');
-require('dotenv').config();
-
-function getUser(token) {
-  try {
-    const user = jwt.verify(token, process.env.JWT_TOKEN);
-    return user._id;
-  } catch (_) {
-    throw new Error('Un error ocurrió al procesar la información del usuario');
-  }
-}
+const getUserWithToken = require('./get_user_with_token');
 
 async function createUrl({ token, type, path, data }) {
-  const id = getUser(token);
+  const id = getUserWithToken(token);
   try {
     const user = await User.findById(id);
     const index = new Date().getTime().toString(36);

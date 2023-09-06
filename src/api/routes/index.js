@@ -1,12 +1,14 @@
 const router = require('express').Router();
 const createUrl = require('../controllers/create_url');
 const createUser = require('../controllers/create_user');
+const deleteUrl = require('../controllers/delete_url');
 const loginUser = require('../controllers/login_user');
 const authUser = require('../middlewares/auth_user');
 const existToken = require('../middlewares/exist_token');
 const verifyBody = require('../middlewares/verify_body');
 const verifyUserExist = require('../middlewares/verify_user_exist');
 const User = require('../models/user');
+const Url = require('../models/user');
 
 /* -- Landing Page -- */
 router.get('/', (req, res) => {
@@ -83,6 +85,17 @@ router.post('/add', async (req, res) => {
   }
 });
 
+router.delete('/del', async (req, res) => {
+  console.log('Entro a la ruta', req.query.id);
+  try {
+    await deleteUrl({ token: req.cookies.token, id_url: req.query.id });
+    // res.location('/dashboard');
+    res.json({ status: 'ok' });
+  } catch (error) {
+    console.error(error);
+    res.redirect('/');
+  }
+});
 // router.post('/create', verifyBody, async (req, res) => {
 //   try {
 //     const data = await create(req.body.link);
@@ -102,7 +115,9 @@ router.post('/add', async (req, res) => {
 //   }
 // });
 router.get('/borrar', async (req, res) => {
+  res.cookie('token', null, { expires: new Date(0) });
   await User.deleteMany({});
+  await Url.deleteMany({});
   res.send('<h1>Base de datos limpia</h1>');
 });
 

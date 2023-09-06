@@ -75,7 +75,6 @@ label {
 
 table {
   border-collapse: separate;
-  border-radius: 5px;
   width: 95%;
   margin: 20px auto;
 }
@@ -92,6 +91,26 @@ td {
   background-color: #fcfcfc;
   border: 1px solid black;
   padding: 8px;
+}
+
+.del-container {
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  align-items: center;
+}
+
+.del-btn {
+  background-color: #ff6666;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.del-btn:hover {
+  transform: scale(1.2);
+  background-color: #f87d7d;
 }
 
 .info {

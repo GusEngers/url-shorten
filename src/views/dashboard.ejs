@@ -73,7 +73,7 @@
             </td>
             <td><%= url.access_code%></td>
             <td><%= url.views%></td>
-            <td><button id="<%= url._id %>" onclick="deleteUrl(this)">X</button></td>
+            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this)">X</button></td>
           </tr>
           <% } %>
         </tbody>

@@ -49,16 +49,19 @@ class PrivateForm {
       });
 
       this.form.addEventListener('submit', () => {
-        this.btn.outerHTML =
-          '<span class="loading">Espere...</span>';
+        this.btn.outerHTML = '<span class="loading">Espere...</span>';
       });
     }
   }
 }
 
 function deleteUrl(button) {
-  button.disabled = true
-  console.log(button.id);
+  button.disabled = true;
+  fetch(`/del?id=${button.id}`, {
+    method: 'DELETE',
+  }).then((_) => {
+    document.location.reload();
+  });
 }
 
 new PrivateForm().listen();
