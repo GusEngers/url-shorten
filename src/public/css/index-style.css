@@ -1,0 +1,23 @@
+.container {
+  text-align: center;
+}
+
+.btn-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.btn-list div {
+  width: 50%;
+}
+
+.info {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: 1px solid green;
+  border-radius: 5px;
+  color: green;
+  cursor: default;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-SHORTEN - Iniciar Sesión</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/login-style.css" />
+  </head>
+  <body>
+    <h1>Iniciar Sesión</h1>
+
+    <% if(error) { %>
+    <span class="error-validation"><%= error %></span>
+    <% } %>
+
+    <form action="/login" method="post" id="login-form">
+      <label for="username">Nombre de usuario</label>
+      <input type="text" id="username" name="username" required />
+      <span id="u-error" class="error-msg"></span>
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" required />
+      <span id="p-error" class="error-msg"></span>
+
+      <button type="submit" id="btn-login" class="btn-login" disabled>
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <hr class="solid" />
+
+    <p>¿No tienes una cuenta?</p>
+    <a class="btn" href="/register">Regístrate</a>
+
+    <!-- Scripts -->
+    <script src="/public/js/login-script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-SHORTEN - Registro</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/register-style.css" />
+  </head>
+  <body>
+    <h1>Registro de Usuario</h1>
+
+    <% if(error) { %>
+    <span class="error-validation"><%= error %></span>
+    <% } %>
+
+    <form action="/register" method="post" id="register-form">
+      <label for="username">Nombre de usuario</label>
+      <input type="text" id="username" name="username" required />
+      <span id="u-error" class="error-msg"></span>
+
+      <label for="pre-password">Contraseña</label>
+      <input type="password" id="pre-password" name="pre-password" required />
+      <span id="pp-error" class="error-msg"></span>
+
+      <label for="password">Repetir Contraseña</label>
+      <input type="password" id="password" name="password" required disabled />
+      <span id="p-error" class="error-msg"></span>
+
+      <button type="submit" id="btn-register" class="btn-register" disabled>
+        Crear Usuario
+      </button>
+    </form>
+
+    <hr class="solid" />
+
+    <p>¿Ya tienes una cuenta?</p>
+    <a class="btn" href="/login">Inicia Sesión</a>
+
+    <!-- Scripts -->
+    <script src="/public/js/register-script.js"></script>
+  </body>
+</html>

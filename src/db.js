@@ -1,18 +1,14 @@
-const { Pool } = require('pg');
+const { connect } = require('mongoose');
 require('dotenv').config();
 
-const pool = new Pool({
-  connectionString:
-    process.env.DB_URI ?? 'postgresql://postgres:12345@localhost/test',
-});
+async function db() {
+  try {
+    await connect(process.env.DB_URI);
+    console.log('Database connecting sucessfully');
+  } catch (error) {
+    console.error('Error connecting database:', error);
+    process.exit(1);
+  }
+}
 
-pool.query(
-  `CREATE TABLE IF NOT EXISTS links(
-  id SERIAL PRIMARY KEY,
-  original VARCHAR
-  );`
-);
-
-module.exports = {
-  db: pool,
-};
+module.exports = db;

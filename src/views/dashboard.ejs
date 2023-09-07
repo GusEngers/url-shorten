@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-SHORTEN - Dashboard</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/dashboard-style.css" />
+  </head>
+  <body>
+    <button class="btn" onclick="finishSession()">Cerrar Sesión</button>
+    <h1>¡Bienvenido <em><%= user.username %></em>!</h1>
+
+    <section>
+      <h3>Acortadores Privados</h3>
+
+      <% if(user.privates.length >= 5) { %>
+
+      <p class="info error">Alcanzaste el límite de 5 acortadores privados</p>
+
+      <% } else { %>
+
+      <form action="/add?type=private" method="post" id="private-form">
+        <div class="form-input">
+          <label for="url-private">Nueva URL-SHORTEN</label>
+          <input type="url" id="url-private" name="original_url" required />
+          <span id="url-private-error" class="error-msg"></span>
+        </div>
+        <div class="form-input">
+          <label for="code-private">Clave de Acceso</label>
+          <input
+            type="password"
+            id="code-private"
+            name="access_code"
+            required
+          />
+          <span id="code-private-error" class="error-msg"></span>
+        </div>
+        <button type="submit" id="btn-private" class="btn-create" disabled>
+          Acortar
+        </button>
+      </form>
+
+      <% } %> <% if(!user.privates.length) { %>
+
+      <p class="info">Todavía no posees acortadores privados</p>
+
+      <% } else { %>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original</th>
+            <th>Acortado</th>
+            <th>Clave Acceso</th>
+            <th>Visitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let url of user.privates) { %>
+          <tr>
+            <td><%= url.original_url%></td>
+            <td>
+              <a
+                href="<%= url.shorten_url%>"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <%= url.shorten_url %>
+              </a>
+            </td>
+            <td><%= url.access_code%></td>
+            <td><%= url.views%></td>
+            <td class="del-container">
+              <button
+                id="<%= url._id %>"
+                class="del-btn"
+                onclick="deleteUrl(this, 'private')"
+              >
+                X
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <% } %>
+    </section>
+
+    <section>
+      <h3>Acortadores Públicos</h3>
+
+      <% if(user.publics.length >= 10) { %>
+
+      <p class="info error">Alcanzaste el límite de 10 acortadores públicos</p>
+
+      <% } else { %>
+
+      <form action="/add?type=public" method="post" id="public-form">
+        <div class="form-input">
+          <label for="url-public">Nueva URL-SHORTEN</label>
+          <input type="url" id="url-public" name="original_url" required />
+          <span id="url-public-error" class="error-msg"></span>
+        </div>
+        <button type="submit" id="btn-public" class="btn-create" disabled>
+          Acortar
+        </button>
+      </form>
+
+      <% } %> <% if(!user.publics.length) { %>
+
+      <p class="info">Todavía no posees acortadores públicos</p>
+
+      <% } else { %>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Original</th>
+            <th>Acortado</th>
+            <th>Visitas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let url of user.publics) { %>
+          <tr>
+            <td><%= url.original_url%></td>
+            <td>
+              <a
+                href="<%= url.shorten_url %>"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <%= url.shorten_url %>
+              </a>
+            </td>
+            <td><%= url.views%></td>
+            <td class="del-container">
+              <button
+                id="<%= url._id %>"
+                class="del-btn"
+                onclick="deleteUrl(this, 'public')"
+              >
+                X
+              </button>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <% } %>
+    </section>
+
+    <!-- Scripts -->
+    <script src="/public/js/dashboard-script.js"></script>
+  </body>
+</html>
