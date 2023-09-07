@@ -7,8 +7,8 @@ const authUser = require('../middlewares/auth_user');
 const existToken = require('../middlewares/exist_token');
 const verifyBody = require('../middlewares/verify_body');
 const verifyUserExist = require('../middlewares/verify_user_exist');
+const Url = require('../models/url');
 const User = require('../models/user');
-const Url = require('../models/user');
 
 /* -- Landing Page -- */
 router.get('/', (req, res) => {
@@ -96,19 +96,42 @@ router.get('/session', (req, res) => {
 });
 
 /* -- Redirect original url -- */
-// router.get('/r/:id', verifyId, async (req, res) => {
-//   try {
-//     const data = await getUrl(req.params.id);
-//     res.redirect(data);
-//   } catch (error) {
-//     res.status(404).json({ error: error.message });
-//   }
-// });
-router.get('/borrar', async (req, res) => {
-  res.cookie('token', null, { expires: new Date(0) });
-  await User.deleteMany({});
-  await Url.deleteMany({});
-  res.send('<h1>Base de datos limpia</h1>');
+router.get('/r/:id', async (req, res) => {
+  try {
+    const url = await Url.findOne({ index: req.params.id });
+    if (!url) {
+      throw new Error();
+    }
+    if (url.private) {
+      return res.render('check', { error: null, id: url._id });
+    } else {
+      url.views++;
+      await url.save();
+      return res.redirect(url.original_url);
+    }
+  } catch (error) {
+    res.render('not-found');
+  }
 });
 
+/* -- Check Access Code -- */
+router.post('/check/:id', async (req, res) => {
+  try {
+    const url = await Url.findById(req.params.id);
+    if (url.access_code === req.body.code) {
+      url.views++;
+      await url.save();
+      return res.redirect(url.original_url);
+    }
+    throw new Error('El código de acceso ingresado no coincide');
+  } catch (error) {
+    res.render('check', { error: error.message, id: req.params.id });
+  }
+});
+
+router.get("/borrar", async(req, res) => {
+  await Url.deleteMany({})
+  await User.deleteMany({})
+  res.json({ok: "listo"})
+})
 module.exports = router;

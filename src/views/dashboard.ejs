@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>URL-SHORTEN - Dashboard</title>
-    <link rel="stylesheet" href="public/css/style.css" />
-    <link rel="stylesheet" href="public/css/dashboard-style.css" />
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/dashboard-style.css" />
   </head>
   <body>
     <button class="btn" onclick="finishSession()">Cerrar Sesión</button>
@@ -41,9 +41,7 @@
         </button>
       </form>
 
-      <% } %>
-      
-      <% if(!user.privates.length) { %>
+      <% } %> <% if(!user.privates.length) { %>
 
       <p class="info">Todavía no posees acortadores privados</p>
 
@@ -73,7 +71,15 @@
             </td>
             <td><%= url.access_code%></td>
             <td><%= url.views%></td>
-            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this, 'private')">X</button></td>
+            <td class="del-container">
+              <button
+                id="<%= url._id %>"
+                class="del-btn"
+                onclick="deleteUrl(this, 'private')"
+              >
+                X
+              </button>
+            </td>
           </tr>
           <% } %>
         </tbody>
@@ -87,7 +93,7 @@
       <% if(user.publics.length >= 10) { %>
 
       <p class="info error">Alcanzaste el límite de 10 acortadores públicos</p>
-  
+
       <% } else { %>
 
       <form action="/add?type=public" method="post" id="public-form">
@@ -101,9 +107,7 @@
         </button>
       </form>
 
-      <% } %>
-
-      <% if(!user.publics.length) { %>
+      <% } %> <% if(!user.publics.length) { %>
 
       <p class="info">Todavía no posees acortadores públicos</p>
 
@@ -131,7 +135,15 @@
               </a>
             </td>
             <td><%= url.views%></td>
-            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this, 'public')">X</button></td>
+            <td class="del-container">
+              <button
+                id="<%= url._id %>"
+                class="del-btn"
+                onclick="deleteUrl(this, 'public')"
+              >
+                X
+              </button>
+            </td>
           </tr>
           <% } %>
         </tbody>
@@ -141,6 +153,6 @@
     </section>
 
     <!-- Scripts -->
-    <script src="public/js/dashboard-script.js"></script>
+    <script src="/public/js/dashboard-script.js"></script>
   </body>
 </html>

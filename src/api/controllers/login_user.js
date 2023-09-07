@@ -10,7 +10,7 @@ async function loginUser(username, password) {
 
     const compare = await bcrypt.compare(password, user.password);
     if (!compare) throw new Error('La contraseña indicada no coincide');
-    
+
     return jwt.sign(
       { _id: user._id, username: user.username },
       process.env.JWT_TOKEN,

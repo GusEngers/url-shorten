@@ -30,7 +30,7 @@ async function createUrl({ token, type, path, data }) {
       await user.save();
     }
   } catch (_) {
-    console.log(_)
+    console.log(_);
     throw new Error('Error al crear la nueva url');
   }
 }

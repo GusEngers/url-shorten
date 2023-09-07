@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-SHORTEN</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/check-style.css" />
+  </head>
+  <body>
+    <h1>Chequeo de <em>Código de Acceso</em></h1>
+
+    <% if(error){%>
+    <span class="error-validation"><%= error %></span>
+    <%} %>
+
+    <form action="/check/<%= id %>" method="post" id="check-form">
+      <label for="code">Ingrese el Código de Acceso</label>
+      <input type="password" id="code" name="code" />
+      <span id="code-error" class="code-error"></span>
+      <button type="submit" id="btn-code" class="btn-check">Verificar</button>
+    </form>
+
+    <!-- Scripts -->
+    <script src="/public/js/check-script.js"></script>
+  </body>
+</html>
