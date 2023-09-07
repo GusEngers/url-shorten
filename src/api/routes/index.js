@@ -129,9 +129,4 @@ router.post('/check/:id', async (req, res) => {
   }
 });
 
-router.get("/borrar", async(req, res) => {
-  await Url.deleteMany({})
-  await User.deleteMany({})
-  res.json({ok: "listo"})
-})
 module.exports = router;
