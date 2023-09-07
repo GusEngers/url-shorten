@@ -52,18 +52,8 @@ router
 /* -- Dashboard Page and Controller -- */
 router.get('/dashboard', authUser, async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate('privates');
-
-    res.render('dashboard', {
-      user,
-      publics: [
-        {
-          original_url: 'https://google.com',
-          shorten_url: 'https://sh.com/asd',
-          views: 3,
-        },
-      ],
-    });
+    const user = await User.findById(req.user._id).populate('privates publics');
+    res.render('dashboard', { user });
   } catch (error) {
     res.render('finish-session', { error: error.message });
   }
@@ -80,31 +70,22 @@ router.post('/add', async (req, res) => {
     });
     res.redirect('/dashboard');
   } catch (error) {
-    console.error(error);
-    res.redirect('/');
+    res.render('finish-session', { error: error.message });
   }
 });
 
 router.delete('/del', async (req, res) => {
-  console.log('Entro a la ruta', req.query.id);
   try {
-    await deleteUrl({ token: req.cookies.token, id_url: req.query.id });
-    // res.location('/dashboard');
+    await deleteUrl({
+      token: req.cookies.token,
+      id_url: req.query.id,
+      type: req.query.type,
+    });
     res.json({ status: 'ok' });
   } catch (error) {
-    console.error(error);
-    res.redirect('/');
+    res.render('finish-session', { error: error.message });
   }
 });
-// router.post('/create', verifyBody, async (req, res) => {
-//   try {
-//     const data = await create(req.body.link);
-//     let path = req.protocol + '://' + req.get('host') + '/r/';
-//     res.json({ link: path + data });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// });
 
 // router.get('/r/:id', verifyId, async (req, res) => {
 //   try {

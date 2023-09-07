@@ -55,9 +55,38 @@ class PrivateForm {
   }
 }
 
-function deleteUrl(button) {
+class PublicForm {
+  form = document.getElementById('public-form');
+  url = document.getElementById('url-public');
+  btn = document.getElementById('btn-public');
+
+  listen() {
+    if (!!this.form) {
+      this.url.addEventListener('input', (e) => {
+        const value = e.target.value;
+        const msg = document.getElementById('url-public-error');
+        const reg =
+          /^((https|http|ftp|smtp):\/\/)(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+
+        if (!reg.test(value)) {
+          msg.textContent = 'No es una url válida';
+          this.btn.disabled = true;
+        } else {
+          msg.textContent = '';
+          this.btn.disabled = false;
+        }
+      });
+
+      this.form.addEventListener('submit', () => {
+        this.btn.outerHTML = '<span class="loading">Espere...</span>';
+      });
+    }
+  }
+}
+
+function deleteUrl(button, type) {
   button.disabled = true;
-  fetch(`/del?id=${button.id}`, {
+  fetch(`/del?id=${button.id}&type=${type}`, {
     method: 'DELETE',
   }).then((_) => {
     document.location.reload();
@@ -65,3 +94,4 @@ function deleteUrl(button) {
 }
 
 new PrivateForm().listen();
+new PublicForm().listen();

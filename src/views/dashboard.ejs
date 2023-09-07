@@ -73,7 +73,7 @@
             </td>
             <td><%= url.access_code%></td>
             <td><%= url.views%></td>
-            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this)">X</button></td>
+            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this, 'private')">X</button></td>
           </tr>
           <% } %>
         </tbody>
@@ -84,7 +84,7 @@
     <section>
       <h3>Acortadores Públicos</h3>
 
-      <% if(publics.length >= 10) { %>
+      <% if(user.publics.length >= 10) { %>
 
       <p class="info error">Alcanzaste el límite de 10 acortadores públicos</p>
   
@@ -96,14 +96,14 @@
           <input type="url" id="url-public" name="original_url" required />
           <span id="url-public-error" class="error-msg"></span>
         </div>
-        <button type="submit" id="btn-public" class="btn-create">
+        <button type="submit" id="btn-public" class="btn-create" disabled>
           Acortar
         </button>
       </form>
 
       <% } %>
 
-      <% if(!publics.length) { %>
+      <% if(!user.publics.length) { %>
 
       <p class="info">Todavía no posees acortadores públicos</p>
 
@@ -118,7 +118,7 @@
           </tr>
         </thead>
         <tbody>
-          <% for(let url of publics) { %>
+          <% for(let url of user.publics) { %>
           <tr>
             <td><%= url.original_url%></td>
             <td>
@@ -131,6 +131,7 @@
               </a>
             </td>
             <td><%= url.views%></td>
+            <td class="del-container"><button id="<%= url._id %>" class="del-btn" onclick="deleteUrl(this, 'public')">X</button></td>
           </tr>
           <% } %>
         </tbody>
