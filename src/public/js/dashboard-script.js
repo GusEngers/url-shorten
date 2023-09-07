@@ -93,5 +93,11 @@ function deleteUrl(button, type) {
   });
 }
 
+function finishSession() {
+  fetch('/session').then((_) => {
+    document.location.replace('/');
+  });
+}
+
 new PrivateForm().listen();
 new PublicForm().listen();

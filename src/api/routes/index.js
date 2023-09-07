@@ -59,6 +59,7 @@ router.get('/dashboard', authUser, async (req, res) => {
   }
 });
 
+/* -- Add new url shorten -- */
 router.post('/add', async (req, res) => {
   try {
     let path = req.protocol + '://' + req.get('host') + '/r/';
@@ -74,6 +75,7 @@ router.post('/add', async (req, res) => {
   }
 });
 
+/* -- Delete url shorten -- */
 router.delete('/del', async (req, res) => {
   try {
     await deleteUrl({
@@ -87,6 +89,13 @@ router.delete('/del', async (req, res) => {
   }
 });
 
+/* -- Finish user session -- */
+router.get('/session', (req, res) => {
+  res.cookie('token', null, { expires: new Date(0) });
+  res.json({ status: 'ok' });
+});
+
+/* -- Redirect original url -- */
 // router.get('/r/:id', verifyId, async (req, res) => {
 //   try {
 //     const data = await getUrl(req.params.id);
