@@ -17,9 +17,7 @@ class PrivateForm {
       this.url.addEventListener('input', (e) => {
         const value = e.target.value;
         const msg = document.getElementById('url-private-error');
-        const reg = new RegExp(
-          '^((http|https)://)[-a-zA-Z0-9@:%._+~#?&//=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%._+~#?&//=]*)$'
-        );
+        const reg = /^((http|https):\/\/)[-a-zA-Z0-9@:%._\+~#?&//=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%._\+~#?&//=]*)$/
 
         if (!reg.test(value)) {
           msg.textContent = 'No es una url válida o sobrepasa los 256 caracteres de longitud';
@@ -65,12 +63,10 @@ class PublicForm {
       this.url.addEventListener('input', (e) => {
         const value = e.target.value;
         const msg = document.getElementById('url-public-error');
-        const reg = new RegExp(
-          '^((http|https)://)[-a-zA-Z0-9@:%._+~#?&//=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%._+~#?&//=]*)$'
-        );
+        const reg = /^((http|https):\/\/)[-a-zA-Z0-9@:%._\+~#?&//=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%._\+~#?&//=]*)$/
 
         if (!reg.test(value)) {
-          msg.textContent = 'No es una url válida';
+          msg.textContent = 'No es una url válida o sobrepasa los 256 caracteres';
           this.btn.disabled = true;
         } else {
           msg.textContent = '';
