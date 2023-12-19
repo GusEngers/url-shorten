@@ -65,8 +65,9 @@ class PublicForm {
       this.url.addEventListener('input', (e) => {
         const value = e.target.value;
         const msg = document.getElementById('url-public-error');
-        const reg =
-          /^((https|http|ftp|smtp):\/\/)(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+        const reg = new RegExp(
+          '^((http|https)://)[-a-zA-Z0-9@:%._+~#?&//=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%._+~#?&//=]*)$'
+        );
 
         if (!reg.test(value)) {
           msg.textContent = 'No es una url válida';
