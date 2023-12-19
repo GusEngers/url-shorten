@@ -17,11 +17,12 @@ class PrivateForm {
       this.url.addEventListener('input', (e) => {
         const value = e.target.value;
         const msg = document.getElementById('url-private-error');
-        const reg =
-          /^((https|http|ftp|smtp):\/\/)(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
+        const reg = new RegExp(
+          '^((http|https)://)[-a-zA-Z0-9@:%._+~#?&//=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%._+~#?&//=]*)$'
+        );
 
         if (!reg.test(value)) {
-          msg.textContent = 'No es una url válida';
+          msg.textContent = 'No es una url válida o sobrepasa los 256 caracteres de longitud';
           this.__valid.a = false;
           this.btnDisabled();
         } else {
@@ -37,8 +38,7 @@ class PrivateForm {
         const exp = /^(?=.*[A-Za-z])(?=.*\d).{4,}$/;
 
         if (!exp.test(value)) {
-          msg.textContent =
-            'La clave debe contener letras, números y un mínimo de 4 caracteres';
+          msg.textContent = 'La clave debe contener letras, números y un mínimo de 4 caracteres';
           this.__valid.b = false;
           this.btnDisabled();
         } else {
